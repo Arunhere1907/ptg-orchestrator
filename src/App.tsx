@@ -184,14 +184,50 @@ const diff6Lines: Record<string, { original: string[]; modified: string[] }> = {
   }
 };
 
+// Fallback data for static deployment (GitHub Pages) where no backend is available
+const fallbackWorkspaceFiles: { [filename: string]: string } = {
+  "billing.ts": diffData["billing.ts"].original,
+  "auth.ts": diffData["auth.ts"].original,
+  "db.ts": diffData["db.ts"].original,
+};
+
+const fallbackMcpConfigs: McpConfig[] = [
+  {
+    id: "fs-mcp",
+    name: "Local FileSystem MCP",
+    type: "filesystem",
+    url: "http://localhost:5001",
+    status: "connected",
+    allowedPaths: ["/src/components", "/src/utils", "/workspace"],
+    apiKey: "sk-proj-fs-key-placeholder",
+  },
+  {
+    id: "sqlite-mcp",
+    name: "SQLite Database MCP",
+    type: "sqlite",
+    url: "http://localhost:5002",
+    status: "connected",
+    dbPath: "./app-data.db",
+    apiKey: "sk-proj-sqlite-key-placeholder",
+  },
+  {
+    id: "github-mcp",
+    name: "GitHub Repositories MCP",
+    type: "github",
+    url: "http://localhost:5003",
+    status: "disconnected",
+    apiKey: "",
+  },
+];
+
 export default function App() {
   // Application State
   const [theme, setTheme] = useState<"dark" | "light" >(() => {
     return (localStorage.getItem("theme") as "dark" | "light") || "dark";
   });
-  const [files, setFiles] = useState<{ [filename: string]: string }>({});
+  const [files, setFiles] = useState<{ [filename: string]: string }>(fallbackWorkspaceFiles);
   const [selectedFile, setSelectedFile] = useState<string>("billing.ts");
-  const [mcpConfigs, setMcpConfigs] = useState<McpConfig[]>([]);
+  const [mcpConfigs, setMcpConfigs] = useState<McpConfig[]>(fallbackMcpConfigs);
   const [aiProvider, setAiProvider] = useState("OpenAI");
   const [aiApiKey, setAiApiKey] = useState("");
   const [aiModel, setAiModel] = useState("");
@@ -248,7 +284,7 @@ export default function App() {
     fetchPipeline();
   }, []);
 
-  // API Call helpers
+  // API Call helpers (with fallback for static deployment)
   const fetchWorkspace = async () => {
     try {
       const res = await fetch("/api/workspace");
@@ -257,7 +293,8 @@ export default function App() {
         setFiles(data.files);
       }
     } catch (err) {
-      console.error("Failed to load workspace files:", err);
+      console.warn("Backend unavailable, using fallback workspace data.");
+      setFiles(fallbackWorkspaceFiles);
     }
   };
 
@@ -269,7 +306,8 @@ export default function App() {
         setMcpConfigs(data.configs);
       }
     } catch (err) {
-      console.error("Failed to load MCP configurations:", err);
+      console.warn("Backend unavailable, using fallback MCP configs.");
+      setMcpConfigs(fallbackMcpConfigs);
     }
   };
 
@@ -281,7 +319,7 @@ export default function App() {
         setPipeline(data.pipeline);
       }
     } catch (err) {
-      console.error("Failed to load active pipeline state:", err);
+      console.warn("Backend unavailable, pipeline starts fresh.");
     }
   };
 
@@ -324,7 +362,8 @@ export default function App() {
         setFiles(data.files);
       }
     } catch (err: any) {
-      setErrorMessage("Failed to reset virtual workspace files.");
+      console.warn("Backend unavailable, resetting workspace locally.");
+      setFiles(fallbackWorkspaceFiles);
     } finally {
       setIsLoading(false);
     }
@@ -650,7 +689,8 @@ export default function App() {
       const res = await fetch("/api/pipeline/reset", { method: "POST" });
       await fetchWorkspace(); // Reset workspace file contents
     } catch (err) {
-      console.error("Failed to reset pipeline state", err);
+      console.warn("Backend unavailable, resetting pipeline locally.");
+      setFiles(fallbackWorkspaceFiles);
     }
   };
 
