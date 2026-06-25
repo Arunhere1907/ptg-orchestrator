@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-border-custom: var(--border);
+  --color-text-dim: var(--text-dim);
+  --color-text-main: var(--text-main);
+  --color-success-custom: var(--success);
+  --color-warning-custom: var(--warning);
+}
+
+:root {
+  --bg: #070708;
+  --card: #111114;
+  --accent: #ffde00;
+  --accent-dim: rgba(255, 222, 0, 0.08);
+  --border: #222226;
+  --text-dim: #88888e;
+  --text-main: #ffffff;
+  --success: #10b981;
+  --warning: #f59e0b;
+}
+
+.light {
+  --bg: #faf9f6;
+  --card: #ffffff;
+  --accent: #eab308;
+  --accent-dim: rgba(234, 179, 8, 0.08);
+  --border: #e2e8f0;
+  --text-dim: #64748b;
+  --text-main: #0f172a;
+  --success: #059669;
+  --warning: #d97706;
+}
+
+/* Base modifications for the Immersive Theme */
+body {
+  background-color: var(--bg) !important;
+  color: var(--text-main) !important;
+  font-family: "Inter", sans-serif;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Remapping neo-brutalist classes to Immersive Sci-Fi styling */
+.neo-border-thick {
+  border: 1px solid var(--border) !important;
+  border-radius: 12px;
+}
+
+.neo-border-thin {
+  border: 1px solid var(--border) !important;
+  border-radius: 8px;
+}
+
+.neo-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  background-color: var(--card) !important;
+}
+
+.neo-shadow-lg {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), 0 0 15px var(--accent-dim) !important;
+  background-color: var(--card) !important;
+}
+
+.neo-shadow-sm {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+  background-color: var(--card) !important;
+}
+
+.neo-btn-press {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.neo-btn-press:active {
+  transform: scale(0.97) !important;
+  filter: brightness(0.9);
+}
+
+.dot-pattern {
+  background-image: radial-gradient(var(--accent-dim) 1.5px, transparent 1.5px) !important;
+  background-size: 20px 20px !important;
+}
+
+/* Glowing utilities */
+.glow {
+  box-shadow: 0 0 20px var(--accent-dim) !important;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border) !important;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+}
+

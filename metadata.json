@@ -1,0 +1,6 @@
+{
+  "name": "\"Pluggable Task Graph\" Orchestrator",
+  "description": "A high-fidelity Immersive cybernetic 3-Agent pipeline (Architect, Executor, Auditor) with pluggable MCP configurations and Human-in-the-Loop approval gates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
