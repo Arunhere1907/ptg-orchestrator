@@ -15,7 +15,7 @@ A developer pastes a bug. Three AI agents handle the rest:
 2. **The Executor** reads the workspace via MCP, writes the patch, saves the file
 3. **The Auditor** reviews the diff for SQL injection, logic errors, or syntax bugs before signing off
 
-The developer stays in control via a **Human-in-the-Loop gate** — the system pauses before any destructive file write and shows a live diff, asking for approval before proceeding.
+The developer stays in control via a **Human-in-the-Loop gate** ; the system pauses before any destructive file write and shows a live diff, asking for approval before proceeding.
 
 ---
 
@@ -67,13 +67,13 @@ User Input (Bug Description / GitHub Issue URL)
 
 ### Key Design Decisions
 
-**Pluggable MCP Configuration** — Agents don't hardcode filesystem access. The MCP layer is configurable: point it at any local directory, SQLite DB, or GitHub repo. Add new MCP servers via the UI without touching agent code.
+**Pluggable MCP Configuration** : Agents don't hardcode filesystem access. The MCP layer is configurable: point it at any local directory, SQLite DB, or GitHub repo. Add new MCP servers via the UI without touching agent code.
 
-**State Visualization** — Every node shows live status: PENDING → IN_PROGRESS (pulsing) → COMPLETED / FAILED. Developers don't trust black boxes; the pipeline is fully transparent.
+**State Visualization** : Every node shows live status: PENDING → IN_PROGRESS (pulsing) → COMPLETED / FAILED. Developers don't trust black boxes; the pipeline is fully transparent.
 
-**Human-in-the-Loop Gate** — Before any file write, the Executor pauses and renders a side-by-side diff (original vs patch). The developer approves or rejects. If rejected, the pipeline aborts cleanly with a log entry.
+**Human-in-the-Loop Gate** : Before any file write, the Executor pauses and renders a side-by-side diff (original vs patch). The developer approves or rejects. If rejected, the pipeline aborts cleanly with a log entry.
 
-**Structured Task Graph** — The Architect's output is a typed JSON object, not free-form text. This makes the pipeline deterministic and extensible — swap out any agent without breaking the others.
+**Structured Task Graph** : The Architect's output is a typed JSON object, not free-form text. This makes the pipeline deterministic and extensible — swap out any agent without breaking the others.
 
 ---
 
