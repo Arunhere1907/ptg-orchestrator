@@ -7,7 +7,7 @@
 
 ## What It Does
 
-PTG Orchestrator is a multi-agent AI system that takes a bug description or GitHub Issue link and autonomously decomposes, fixes, and audits the code — without the developer leaving their workflow.
+PTG Orchestrator is a multi-agent AI system that takes a bug description or GitHub Issue link and autonomously decomposes, fixes, and audits the code without the developer leaving their workflow.
 
 A developer pastes a bug. Three AI agents handle the rest:
 
