@@ -1,4 +1,4 @@
-# PTG Orchestrator — Pluggable Task Graph Bug-Fixing Pipeline
+# PTG Orchestrator : Pluggable Task Graph Bug-Fixing Pipeline
 
 > **India RUNS Hackathon 2026 · Challenge 1 — Build an AI System**  
 > Track: Developers, Engineers, Technical Builders
